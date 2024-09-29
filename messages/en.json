@@ -1,0 +1,14 @@
+{
+    "login":{
+        "title":"Login Page",
+        "mail_placeholder":"Email",
+        "pass_placeholder":"Password",
+        "login_button":"Log In"
+    },
+    "homepage":{
+        "title":"Hello"
+    },
+    "navlinks":{
+        "title":"Proffer"
+    }
+}
