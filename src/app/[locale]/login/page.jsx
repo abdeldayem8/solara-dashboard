@@ -1,16 +1,17 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '@/app/[locale]/login/style.css'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
-
+import Loading from '@/components/Loading'
 
 const page = () => {
 
   const t = useTranslations("login");
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isloading,setIsloading] = useState(true);
   const router = useRouter();
  
    
@@ -33,7 +34,7 @@ const page = () => {
       const data = await response.json();
       const token =data.token;
       if (response.ok) {
-       Cookies.set('token', token, { path: '/', expires: 7 })  
+       Cookies.set('token', token, { path: '/', expires: 1 })  
        router.push('/')
       } else {
         alert('Login Failed: ' + data.message);
@@ -43,11 +44,22 @@ const page = () => {
       alert('Error during login');
     }
   };
+
+  const token = Cookies.get('token');
+  useEffect(()=>{
+    if(token){
+      router.push('/');
+    }else{
+      setIsloading(false);
+    }
+  },[router])
+  if(isloading){
+    return <Loading/>
+  }
   
-
-
   return <>
-  <div className='h-screen flex justify-center items-center gap-4'>
+  
+    <div className='h-screen flex justify-center items-center gap-4'>
        <form className='form flex flex-col sm:w-3/4' onSubmit={handleSubmit}>
        <h1 className='font-bold text-lg text-center mb-5'>{t("title")}</h1>
         <input className='input' type='email' placeholder={t("mail_placeholder")} onChange={(e)=>setEmail(e.target.value)}/>
@@ -55,6 +67,7 @@ const page = () => {
         <button className='loginbutton'>{t("login_button")}</button>
         </form>
   </div>
+  
   </>
 }
 export default page
