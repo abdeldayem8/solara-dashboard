@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import '@/app/[locale]/login/style.css'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie'
 import Loading from '@/components/Loading'
+import { useAuth } from '@/app/context/authcontext'
 
 const page = () => {
 
@@ -13,6 +13,7 @@ const page = () => {
   const [password, setPassword] = useState('');
   const [isloading,setIsloading] = useState(true);
   const router = useRouter();
+  const { login,token } = useAuth();
  
    
   const handleSubmit = async (e) => {
@@ -34,7 +35,7 @@ const page = () => {
       const data = await response.json();
       const token =data.token;
       if (response.ok) {
-       Cookies.set('token', token, { path: '/', expires: 1 })  
+       login(token);
        router.push('/')
       } else {
         alert('Login Failed: ' + data.message);
@@ -45,7 +46,7 @@ const page = () => {
     }
   };
 
-  const token = Cookies.get('token');
+  
   useEffect(()=>{
     if(token){
       router.push('/');

@@ -1,8 +1,11 @@
 "use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useAuth } from '@/app/context/authcontext';
+
 
 const Navbar = () => {
 
@@ -10,7 +13,7 @@ const Navbar = () => {
   const pathname =usePathname();
   const router = useRouter();
   const locale = useParams().locale;
-  
+  const { token, logout } = useAuth();
   
   const handlelanguagechange = (e)=>{
    const newLocale = e.target.value;
@@ -18,16 +21,34 @@ const Navbar = () => {
    router.push(`/${newLocale}/${path}`)
   }
 
+  const handleLogout = ()=>{
+    logout();
+    router.push(`/${locale}/login`)
+  }
+  
   return <>
-   <div className='b-nav flex justify-between items-center mx-2 py-4'>
+  {
+    token ? (<div className='b-nav flex justify-between items-center mx-2 py-4'>
     <div>
       <Link href={`/${locale}/`}>{t("title")}</Link>
     </div>
-    <select value={locale} onChange={handlelanguagechange} className='rounded-md px-4 py-2 bg-transparent hover:outline-none focus:outline-none'>
+    <div><button onClick={handleLogout} className='bg-sky-500 p-1 rounded text-white'>Log Out</button>
+    <select value={locale} onChange={handlelanguagechange} className='rounded-md px-4 py-2 bg-transparent hover:outline-none focus:outline-none '>
+      <option value="en">EN</option>
+      <option value="ar">AR</option>
+    </select>
+    </div>
+   </div>) :(<div className='b-nav flex justify-between items-center mx-2 py-4'>
+    <div>
+      <Link href={`/${locale}/`}>{t("title")}</Link>
+    </div>
+    <select value={locale} onChange={handlelanguagechange} className='rounded-md px-4 py-2 bg-transparent hover:outline-none focus:outline-none '>
       <option value="en">EN</option>
       <option value="ar">AR</option>
     </select>
    </div>
+  )}
+  
   </>
 }
 export default Navbar

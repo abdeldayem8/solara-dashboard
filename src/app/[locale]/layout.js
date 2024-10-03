@@ -2,6 +2,7 @@ import "../globals.css";
 import Navbar from "@/components/Navbar"
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { AuthProvider } from "../context/authcontext";
 
 
 export const metadata = {
@@ -18,12 +19,14 @@ export default async function RootLayout({children, params}) {
     
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body>
+      <AuthProvider>
       <NextIntlClientProvider messages={messages}>
         <div className="mx-auto max-w-4xl h-screen">
        <Navbar/>
         {children}
         </div>
         </NextIntlClientProvider>
+        </AuthProvider>  
       </body>
     </html>
   
