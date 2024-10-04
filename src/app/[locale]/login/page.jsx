@@ -4,7 +4,7 @@ import '@/app/[locale]/login/style.css'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import Loading from '@/components/Loading'
-import { useAuth } from '@/app/context/authcontext'
+import Cookies from 'js-cookie'
 
 const page = () => {
 
@@ -13,12 +13,11 @@ const page = () => {
   const [password, setPassword] = useState('');
   const [isloading,setIsloading] = useState(true);
   const router = useRouter();
-  const { login,token } = useAuth();
+  const token = Cookies.get('token')
  
    
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
@@ -35,7 +34,7 @@ const page = () => {
       const data = await response.json();
       const token =data.token;
       if (response.ok) {
-       login(token);
+        Cookies.set('token', token, { path: '/', expires: 1 });
        router.push('/')
       } else {
         alert('Login Failed: ' + data.message);

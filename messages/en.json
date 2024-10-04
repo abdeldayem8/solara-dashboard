@@ -5,10 +5,11 @@
         "pass_placeholder":"Password",
         "login_button":"Log In"
     },
-    "homepage":{
-        "title":"Hello"
-    },
     "navlinks":{
-        "title":"Proffer"
+        "title":"Proffer",
+        "logout":"Log Out"
+    },
+    "home":{
+        "posts":"Posts"
     }
 }

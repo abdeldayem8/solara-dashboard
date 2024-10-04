@@ -1,9 +1,8 @@
 "use client"
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useTranslations } from 'next-intl'
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { useAuth } from '@/app/context/authcontext';
 
 
@@ -32,7 +31,7 @@ const Navbar = () => {
     <div>
       <Link href={`/${locale}/`}>{t("title")}</Link>
     </div>
-    <div><button onClick={handleLogout} className='bg-sky-500 p-1 rounded text-white'>Log Out</button>
+    <div><button onClick={handleLogout} className='bg-sky-500 p-1 rounded text-white'>{t('logout')}</button>
     <select value={locale} onChange={handlelanguagechange} className='rounded-md px-4 py-2 bg-transparent hover:outline-none focus:outline-none '>
       <option value="en">EN</option>
       <option value="ar">AR</option>

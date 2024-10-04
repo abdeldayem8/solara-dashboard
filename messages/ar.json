@@ -5,10 +5,11 @@
         "pass_placeholder":"كلمة السر",
         "login_button":"تسجيل الدخول"
     },
-    "homepage":{
-        "title":"مرحبا"
-    },
     "navlinks":{
-        "title":"بروفور"
+        "title":"بروفور",
+        "logout":"تسجيل الخروج"
+    },
+    "home":{
+        "posts":"المنشورات"
     }
 }

@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar"
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { AuthProvider } from "../context/authcontext";
+import { PostsProvider } from "../context/fetchpostscontext";
 
 
 export const metadata = {
@@ -12,20 +13,22 @@ export const metadata = {
 
 export default async function RootLayout({children, params}) {
 
-  const locale = params.locale;
+  const locale = params?.locale;
   const messages = await getMessages();
-
+  console.log(locale)
   return (
     
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body>
       <AuthProvider>
+        <PostsProvider>
       <NextIntlClientProvider messages={messages}>
         <div className="mx-auto max-w-4xl h-screen">
        <Navbar/>
         {children}
         </div>
         </NextIntlClientProvider>
+        </PostsProvider>
         </AuthProvider>  
       </body>
     </html>

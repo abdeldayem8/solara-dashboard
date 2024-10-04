@@ -14,18 +14,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (newToken) => {
-    Cookies.set('token', newToken, { path: '/', expires: 1 });
-    setToken(newToken);
-  };
-
   const logout = () => {
     Cookies.remove('token');
     setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ token,logout }}>
       {children}
     </AuthContext.Provider>
   );
